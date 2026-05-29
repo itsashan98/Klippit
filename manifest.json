@@ -1,0 +1,46 @@
+{
+  "manifest_version": 2,
+  "name": "Klippit",
+  "version": "1.1.0",
+  "description": "Save, categorize, and quickly paste your most-used links.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "linkstash@extension.local",
+      "strict_min_version": "78.0"
+    }
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "clipboardWrite",
+    "activeTab"
+  ],
+  "sidebar_action": {
+    "default_title": "Klippit",
+    "default_panel": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Toggle Klippit"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Klippit</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span>Klippit</span>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="addCurrentBtn" title="Save current tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <button class="icon-btn" id="settingsBtn" title="Manage categories">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search links..." autocomplete="off" />
+      <button class="clear-search" id="clearSearch" style="display:none">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Tabs -->
+    <nav class="tabs" id="tabsNav">
+      <button class="tab active" data-tab="saved">Saved</button>
+      <button class="tab" data-tab="recent">Recent</button>
+      <button class="tab" data-tab="starred">Starred</button>
+    </nav>
+
+    <!-- Content -->
+    <main class="content" id="mainContent">
+      <!-- Populated by JS -->
+    </main>
+
+    <!-- Add / Edit Modal -->
+    <div class="modal-overlay" id="modalOverlay" style="display:none">
+      <div class="modal">
+        <div class="modal-header">
+          <span id="modalTitle">Add Link</span>
+          <button class="icon-btn" id="closeModal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <label>URL</label>
+        <div class="url-row">
+          <input type="url" id="modalUrl" placeholder="https://example.com" />
+          <button class="pill-btn" id="useCurrentTabBtn" title="Use current tab">&#128205; Current Tab</button>
+        </div>
+        <div class="recent-pick-wrap" id="recentPickWrap">
+          <button class="recent-pick-toggle" id="recentPickToggle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Pick from recent tabs
+            <svg class="rpchev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="recent-pick-list" id="recentPickList" style="display:none"></div>
+        </div>
+        <label>Title</label>
+        <input type="text" id="modalName" placeholder="Link title" />
+        <label>Category</label>
+        <div class="cat-row">
+          <select id="modalCat"></select>
+          <input type="text" id="newCatInput" placeholder="New category name" style="display:none" />
+          <button class="pill-btn" id="newCatToggle">+ New</button>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-ghost" id="cancelModal">Cancel</button>
+          <button class="btn-primary" id="saveModal">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Manager -->
+    <div class="modal-overlay" id="catOverlay" style="display:none">
+      <div class="modal">
+        <div class="modal-header">
+          <span>Categories</span>
+          <button class="icon-btn" id="closeCatModal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div id="catList"></div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <input type="text" id="addCatInput" placeholder="New category..." style="flex:1" />
+          <button class="btn-primary" id="addCatBtn">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
